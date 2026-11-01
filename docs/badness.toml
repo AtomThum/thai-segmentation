@@ -1,0 +1,5 @@
+[environments.texsource]
+like = "lstlisting"
+
+[environments.bashsource]
+like = "lstlisting"

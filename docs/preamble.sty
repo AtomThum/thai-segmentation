@@ -1,0 +1,206 @@
+% badness skip-file
+\ProvidesPackage{preamble}
+
+%%% Fonts Setup
+% Babel will be implemented soon when thai-segmentation is ready
+% Fonts Setup: Thai Language
+\usepackage{polyglossia}
+\directlua{
+  luaotfload.add_fallback("monofallback", {
+    "SOV_monomon:mode=harf;script=thai;"
+  })
+}
+\newfontfamily{\thaifont}{Niramit}[Script=Thai,WordSpace={1.5,2.25,0.75}]
+\newfontfamily{\thaifontsf}{Athiti}[Script=Thai,Scale=MatchUppercase]
+\newfontfamily{\thaifonttt}{MapleMono-NF}[Scale=MatchUppercase,RawFeature={fallback=monofallback}]
+\newfontfamily{\englishfont}{Niramit}[Ligatures=TeX]
+\newfontfamily{\ncmfont}{NewComputerModern}[Ligatures=TeX]
+
+\setdefaultlanguage{thai}
+\setmainlanguage{thai}
+\setotherlanguage{english}
+
+\usepackage[thai-segmentation=true,interword-expansion=true,interword-stretch=0.8,interword-shrink=0.3]{thai-segmentation}
+\usepackage[protrusion=true,expansion=true,tracking=true]{microtype}
+
+%%% Colors
+\usepackage{xcolor}
+\definecolor{DocAccent}{HTML}{374FAC}
+\definecolor{DocAccentLight}{HTML}{6F94D0}
+\definecolor{TableAccent}{HTML}{BADDFB}
+\definecolor{TableAccentLight}{HTML}{DFFBFC}
+\definecolor{LinkCol}{HTML}{114B47}
+\definecolor{CodeCol}{HTML}{D7DEE3}
+
+%%% Stylings
+\usepackage{tikz, pgf, pgfplots}
+\usetikzlibrary{calc}
+\usepackage{adjustbox}
+% Styling: Page Layout and Margins
+\setsecnumdepth{subsection}
+\settocdepth{subsection}
+\setlrmarginsandblock{2.5cm}{2.5cm}{*} % Default: 2.5cm, 2.5cm
+\setulmarginsandblock{2.5cm}{2.5cm}{*} % Default: 3cm, 2.5cm
+\setlength{\headheight}{30pt}
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{0.3em}
+\setlength{\beforechapskip}{20pt}
+\RenewDocumentCommand{\arraystretch}{}{1}
+\setSpacing{1.75}
+\checkandfixthelayout
+% Styling: Table of Contents
+\renewcommand{\tocheadstart}{\noindent\textcolor{DocAccent}{\rule{\textwidth}{2pt}\vspace{1.75ex}}}
+\renewcommand{\aftertoctitle}{\newline\textcolor{DocAccentLight}{\noindent\rule{\textwidth}{0.5pt}}}
+\AddToHookWithArguments{cmd/mem@tableofcontents/after}{%
+  \noindent\textcolor{DocAccent}{\rule{\textwidth}{2pt}}
+}
+\addtolength{\cftsectionnumwidth}{0.2em}
+\addtolength{\cftpartnumwidth}{0.3em}
+\RenewDocumentCommand{\cftbookfont}{}{\LARGE\bfseries\sffamily}
+\RenewDocumentCommand{\cftpartfont}{}{\Large\itshape\sffamily}
+\setlength{\cftbeforesectionskip}{0.4em}
+\setlength{\cftbeforesubsectionskip}{0.4em}
+\setparaheadstyle{\bfseries\sffamily}
+% Styling: Footnotes
+\makepagestyle{bodypages}
+\makefootrule{bodypages}{\textwidth}{0.5pt}{5pt}
+\makeoddhead{bodypages}{}{\textbf{\textsf{\thepage}}}{}
+\makeevenhead{bodypages}{}{\textbf{\textsf{\thepage}}}{}
+\makeoddfoot{bodypages}{}{}{\textsf{\emph{\rightmark}}}
+\makeevenfoot{bodypages}{}{}{\textsf{\emph{\rightmark}}}
+\makepsmarks{bodypages}{
+  \createmark{chapter}{right}{shownumber}{}{. }
+}
+\makefootrule{bodypages}{\textwidth}{0.5pt}{5pt}
+\pagestyle{bodypages}
+% Styling: Figures
+\captiondelim{\textcolor{DocAccentLight}{~|~}}
+\captionnamefont{\sffamily\bfseries}
+\captiontitlefont{\setSpacing{1.5}\normalfont\itshape}
+\captionstyle[\centering]{\raggedright}
+\captionwidth{0.6\textwidth}
+\changecaptionwidth
+% Styling: Chapters
+\makechapterstyle{thaiseg-article}{
+  \setlength{\beforechapskip}{0.5em}
+  \setlength{\afterchapskip}{1em}
+  \renewcommand{\chapnumfont}{\huge\bfseries\sffamily}
+  \renewcommand{\chapnamefont}{\bfseries\sffamily}
+  \renewcommand{\chaptitlefont}{\bfseries\sffamily\HUGE}
+  \renewcommand{\afterchapternum}{\hspace{1em}}
+  \renewcommand{\printchaptername}{}
+  \renewcommand{\printchapternum}{%
+    \flushleft
+    \begin{tikzpicture}
+    \node[ rectangle,inner sep=0pt,minimum height=1.25cm,minimum width=1.25cm,fill=DocAccent ] (ChapNumBox) at (0, 0){\chapnumfont\thechapter};
+    \node[white] (ChapNum) at (ChapNumBox.center){%
+      \begin{adjustbox}{max width=1cm}
+      \chapnumfont\thechapter
+      \end{adjustbox}
+    };
+    \node[above right,inner sep=0pt,shift={(0, 4pt)}] (ChapName) at (ChapNumBox.north west) {\chapnamefont\chaptername};
+    \end{tikzpicture}
+  }
+}
+\makepagestyle{chapterstyle}
+\aliaspagestyle{chapter}{chapterstyle}
+\chapterstyle{thaiseg-article}
+% Styling: Sections
+\setsecnumformat{%
+  \sffamily\bfseries\Large%
+  \S\quad\thesection\quad\textcolor{DocAccentLight}{|}\quad%
+}
+% Styling: Paragraph
+\setparaheadstyle{\bfseries\sffamily}
+
+%%% Packages
+% Packages: General
+\usepackage[dvipsnames]{xcolor}
+\usepackage{float, graphicx, pdfpages}
+\usepackage{tabularray}
+\SetTblrInner{stretch = 1}
+\usepackage[inkscapeversion = 1,inkscapelatex = true]{svg}
+\graphicspath{{diagrams/}}
+\svgpath{{diagrams/}}
+
+\usepackage{minted}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,skins,breakable}
+\tcbset{listing engine=minted}
+\NewTCBListing{texsource}{ m }{
+  listing engine=minted,
+  listing only,
+  minted language=latex,
+  minted options={
+    fontsize=\small,
+    breaklines=true,
+    linenos=true,
+  },
+  colback=CodeCol,
+  colframe=black,
+  boxrule=0pt,
+  toprule=1pt,
+  bottomrule=1pt,
+  sharp corners,
+  fonttitle=\ttfamily,
+  title={#1}
+}
+\NewTCBListing{bashsource}{ m }{
+  listing engine=minted,
+  listing only,
+  minted language=bash,
+  minted options={
+    fontsize=\small,
+    breaklines=true,
+    linenos=true,
+  },
+  colback=CodeCol,
+  colframe=black,
+  boxrule=0pt,
+  toprule=1pt,
+  bottomrule=1pt,
+  sharp corners,
+  fonttitle=\ttfamily,
+  title={#1}
+}
+\usemintedstyle{algol_nu}
+\usepackage[inline]{enumitem}
+
+% Packages: References
+\usepackage{zref-clever}
+\usepackage[colorlinks,allcolors=LinkCol]{hyperref}
+\zcDeclareLanguage{thai}
+\zcLanguageSetup{thai}{
+  type = chapter,
+  name-sg = บทที่,
+}
+\zcLanguageSetup{thai}{
+  type = section,
+  name-sg = ตอนที่,
+}
+\zcLanguageSetup{thai}{
+  type = equation,
+  name-sg = สมการที่,
+}
+\zcLanguageSetup{thai}{
+  type = section,
+  name-sg = ตอนที่,
+}
+\zcLanguageSetup{thai}{
+  type = subsection,
+  name-sg = ตอนที่,
+}
+\zcLanguageSetup{thai}{
+  type = figure,
+  name-sg = รูปที่,
+}
+\zcLanguageSetup{thai}{
+  type = table,
+  name-sg = ตารางที่,
+}
+
+% Backmatter: Indices
+\usepackage{imakeidx}
+\makeindex[intoc=true]
+\usepackage[backend=biber,style=apa,sorting=anyvt]{biblatex}
+\addbibresource{bibliography.bib}

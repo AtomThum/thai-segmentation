@@ -1,0 +1,3 @@
+---@alias run { kind: string, chars: string[], text: string, first: Node, last: Node, glyph_count: integer }?
+---@alias runs run[]
+---@alias run_result { words: string[], tcc: table<string, integer[]> }

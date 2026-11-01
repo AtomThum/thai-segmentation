@@ -1,0 +1,108 @@
+% badness skip-file
+% !TEX program = lualatex
+\NeedsTeXFormat{LaTeX2e}[2025/11/01]
+\ProvidesPackage{thai-segmentation}[Thai segmentation and interword spacings system]
+
+\ExplSyntaxOn
+\sys_if_engine_luatex:F {
+  \msg_new:nnn { thai-segmentation } { no-lualatex }
+  {
+    Package~thai-segmentaton~requires~LuaLaTeX.
+    Please~set~LuaLaTeX~as~compiler
+  }
+  \msg_fatal:nn { thai-segmentation } { no-lualatex }
+}
+
+\msg_new:nnn { thai-segmentation } { python-path-deprecated }
+{
+  The~python-path~option~is~ignored:~segmentation~now~runs~in~Lua~and~no~
+  longer~needs~Python~or~shell-escape.
+}
+
+\bool_new:N { \g_thaiseg_EnableThaiSegmentation_bool }
+\bool_new:N { \g_thaiseg_EnableInterwordExpansion_bool }
+\bool_new:N { \g_thaiseg_EnableHyphenationMarkings_bool }
+\clist_new:N { \g_thaiseg_Dictionaries_clist }
+\fp_new:N { \g_thaiseg_InterwordStretch_fl }
+\fp_new:N { \g_thaiseg_InterwordShrink_fl }
+\fp_new:N { \g_thaiseg_InterclusterStretch_fl }
+\int_new:N { \g_thaiseg_TCCMinEdge_int }
+
+\keys_define:nn { thai-segmentation }
+{
+  thai-segmentation .bool_set:N = \g_thaiseg_EnableThaiSegmentation_bool,
+  thai-segmentation .default:n = true,
+  thai-segmentation .initial:n = true,
+
+  interword-expansion .bool_set:N = \g_thaiseg_EnableInterwordExpansion_bool,
+  interword-expansion .default:n = true,
+  interword-expansion .initial:n = true,
+
+  show-hyph .bool_set:N = \g_thaiseg_EnableHyphenationMarkings_bool,
+  show-hyph .default:n = true,
+
+  dictionary .clist_set:N = \g_thaiseg_Dictionaries_clist,
+
+  interword-stretch .fp_set:N = \g_thaiseg_InterwordStretch_fl,
+  interword-stretch .default:n = 1,
+  interword-stretch .initial:n = 1,
+
+  interword-shrink .fp_set:N = \g_thaiseg_InterwordShrink_fl,
+  interword-shrink .default:n = 0.5,
+  interword-shrink .initial:n = 0.5,
+
+  intercluster-stretch .fp_set:N = \g_thaiseg_InterclusterStretch_fl,
+  intercluster-stretch .default:n = 0.2,
+  intercluster-stretch .initial:n = 0,
+
+  tcc-min-edge .int_set:N = \g_thaiseg_TCCMinEdge_int,
+  tcc-min-edge .default:n = 2,
+  tcc-min-edge .initial:n = 2,
+}
+\ProcessKeyOptions [ thai-segmentation ]
+
+\lua_now:e
+{
+  local~ts = require("thai_segmentation")
+  ts.config({
+    thai_segmentation = \bool_if:NTF \g_thaiseg_EnableThaiSegmentation_bool { true } { false },
+    interword_expansion = \bool_if:NTF \g_thaiseg_EnableInterwordExpansion_bool { true } { false },
+    show_hyph = \bool_if:NTF \g_thaiseg_EnableHyphenationMarkings_bool { true } { false },
+    dictionaries = ts.split_list("\lua_escape:e { \clist_use:Nn \g_thaiseg_Dictionaries_clist { , } }"),
+    interword_stretch = \lua_escape:e { \fp_use:N \g_thaiseg_InterwordStretch_fl },
+    interword_shrink = \lua_escape:e { \fp_use:N \g_thaiseg_InterwordShrink_fl },
+    intercluster_stretch = \lua_escape:e { \fp_use:N \g_thaiseg_InterclusterStretch_fl },
+    tcc_min_edge = \lua_escape:e {\int_use:N \g_thaiseg_TCCMinEdge_int }
+  })
+}
+
+% Dictionary edits. Each takes a comma-separated list and applies from the
+% paragraph it appears in onwards: segmentation runs when a paragraph ends.
+\cs_new_protected:Npn \__thaiseg_call:nn #1 #2
+{
+  \lua_now:e
+  {
+    local~ts = require("thai_segmentation")
+    ts.#1(ts.split_list("\lua_escape:n {#2}"))
+  }
+}
+
+\NewDocumentCommand{\ThaiAddWords}{m}{ \__thaiseg_call:nn { add_words } {#1} }
+\NewDocumentCommand{\ThaiRemoveWords}{m}{ \__thaiseg_call:nn { remove_words } {#1} }
+\NewDocumentCommand{\ThaiAddSyllables}{m}{ \__thaiseg_call:nn { add_syllables } {#1} }
+\NewDocumentCommand{\ThaiRemoveSyllables}{m}{ \__thaiseg_call:nn { remove_syllables } {#1} }
+% Fixed break points, like \hyphenation: \ThaiHyphenation{ไฮ-เซน-เบิร์ก}. An entry
+% without hyphens is never broken. The word is added to the dictionary too.
+\NewDocumentCommand{\ThaiHyphenation}{m}{ \__thaiseg_call:nn { hyphenation } {#1} }
+\NewDocumentCommand{\ThaiRemoveHyphenation}{m}{ \__thaiseg_call:nn { remove_hyphenation } {#1} }
+% Intercluster stretch in pt, as the intercluster-stretch key; 0 turns it off.
+% Global, and like the edits above it applies from the paragraph it appears in.
+\NewDocumentCommand{\ThaiInterclusterStretch}{m}
+{
+  \lua_now:e { require("thai_segmentation").set_intercluster_stretch(\fp_eval:n {#1}) }
+}
+\NewDocumentCommand{\ThaiAddWordsFromFile}{m}
+{
+  \lua_now:e { require("thai_segmentation").add_words_from_file("\lua_escape:e {#1}") }
+}
+\ExplSyntaxOff

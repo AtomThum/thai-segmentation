@@ -1,0 +1,165 @@
+\chapter{วิธีการใช้งานและการตั้งค่าเบื้องต้น}
+
+\section{ความต้องการขั้นต่ำของชุดคำสั่ง}
+
+\begin{enumerate}
+  \item \lualatexlogo รุ่น (เวอร์ชัน) หลังเดือนตุลาคม ปี ค.ศ. 2025 (พ.ศ. 2568)
+  \item ชุดคำสั่ง \texttt{fontspec} และ \texttt{polyglossia} ของ \latexlogo
+  \item ชุดแบบอักษรไทย (Thai font)
+\end{enumerate}
+
+\paragraph{หมายเหตุ :}
+
+ณ ขณะนี้ ยังไม่สามารถใช้ชุดคำสั่งนี้กับชุดคำสั่ง \texttt{babel} ได้
+
+\section{วิธีการดาวน์โหลดชุดคำสั่งจากแหล่งต้นทาง}
+
+\paragraph{ในระบบปฎิบัติการ Linux :}
+
+ให้รันคำสั่งต่อไปนี้ใน bash
+
+\begin{bashsource}{}
+mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
+cd $(kpsewhich -var-value TEXMFHOME)/tex/latex
+git clone https://github.com/AtomThum/thai-segmentation
+rm -rf .git
+\end{bashsource}
+
+สามารถตรวจสอบว่าชุดคำสั่งพร้อมใช้งานได้ด้วย
+\begin{bashsource}{}
+kpsewhich thai-segmentation.sty
+\end{bashsource}
+
+\paragraph{ในระบบปฎิบัติการ Windows :}
+
+\begin{enumerate}
+  \item ถ้าไม่ได้ตั้งค่า \texttt{TEXMFHOME} ไว้ ให้สร้างโฟลเดอร์ \\
+        \texttt{\%USERPROFILE\%\textbackslash texmf\textbackslash
+          tex\textbackslash latex\textbackslash thai-segmentation}
+  \item ไปที่ยูอาร์แอล \url{https://github.com/AtomThum/thai-segmentation}
+  \item กดที่ปุ่ม \texttt{Code} สีเขียว แล้วกดดาวน์โหลด ZIP ไฟล์
+  \item แตกไฟล์ \texttt{thai-segmentation-main.zip}
+  \item คัดลอกไฟล์ในโฟลเดอร์ที่แตกออกมาไปที่ \\
+        \texttt{\%USERPROFILE\%\textbackslash tex\textbackslash
+          latex\textbackslash thai-segmentation}
+\end{enumerate}
+
+\paragraph{ในระบบปฎิบัติการ Macs :}
+
+ยังไม่มีข้อมูลเนื่องจากผู้พัฒนาชุดคำสั่งไม่มีเงินเพื่อซื้อ Macbook
+
+\section{การเรียกใช้งานชุดคำสั่งและการตั้งค่าเอกสาร}
+\label{sec:configuration}
+
+ตั้งเอกสารให้ใช้ \lualatexlogo และตั้งให้ \latexlogo ใช้ภาษาไทยโดยใช้
+\texttt{polyglossia} เลือกชุดแบบอักษรที่ต้องการโดยใช \texttt{fontspec}
+ตัวอย่างเช่น
+
+\begin{texsource}{}
+% !TEX program = lualatex
+\documentclass{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\newfontfamily{\thaifont}{Sarabun}[Script=Thai]
+\newfontfamily{\thaifontsf}{Athiti}[Script=Thai,Scale=MatchUppercase]
+\newfontfamily{\englishfont}{Sarabun}[Ligatures=TeX]
+
+\setdefaultlanguage{thai}
+\setmainlanguage{thai}
+\setotherlanguage{english}
+\end{texsource}
+
+ณ ขณะนี้ ยังไม่สามารถใช้ชุดคำสั่งนี้กับชุดคำสั่ง \texttt{babel} ได้
+
+สามารถเรียกใช้ชุดคำสั่งจาก \texttt{thai-segmentation} ได้โดย
+
+\begin{texsource}{}
+  \usepackage[<options>]{thai-segmentation}
+\end{texsource}
+สามารถปรับค่าต่าง ๆ ใน \texttt{<options>} ได้ดังนี้
+\begin{description}[font=\ttfamily]
+  \item[thai-segmentation] (\texttt{true}/\texttt{false}) เปิด-ปิดการตัดคำไทย
+  \item[interword-expansion] (\texttt{true}/\texttt{false})
+        เปิด-ปิดการขยายช่องว่างระหว่างคำในประโยค
+        (เพิ่มเติมใน\zcref{sec:interword-expansion})
+  \item[interword-stretch] (ทศนิยม) จะมีผลก็ต่อเมื่อ
+        \texttt{interword-expansion=true} เท่านั้น
+        กำหนดขนาดที่ช่องว่างระหว่างคำสามารถขยายได้ มีหน่วยเป็นพอยต์ (pt)
+        มีค่าโดยปริยายเป็น \texttt{1} ไม่ควรตั้งค่าเกินกว่านี้
+        เนื่องจากอาจทำให้คำในประโยคห่างกันมากเกินไป
+  \item[interword-shrink] (ทศนิยม) จะมีผลก็ต่อเมื่อ
+        \texttt{interword-expansion=true} เท่านั้น
+        กำหนดขนาดสูงสุดที่ช่องหว่างระหว่างคำสามารถหดได้ มีหน่วยเป็นพอยต์ (pt)
+        มีค่าโดยปริยายเป็น \texttt{0.5}
+        ไม่ควรตั้งค่าเกินกว่านี้เนื่องจากอาจทำให้คำชิดกันเกินไปหรือซ้อนทับกัน
+  \item[intercluster-stretch] (ทศนิยม)
+        กำหนดระยะห่างเพิ่มเติมระหว่างกลุ่มตัวอักษรไทย (Thai character clusters)
+        จะมีผลก็ต่อเมื่อตั้งเป็นค่าทศนิยมบวก มีค่าปริยายเป็น \texttt{0}
+        ควรตั้งค่าให้น้อยกว่า \texttt{interword-stretch}
+  \item[dictionary] ระบุที่อยู่ (path) ของไฟล์คำที่จะใส่เพิ่มเข้าพจนานุกรมที่
+        \texttt{newmm} ใช้ตัดคำ ตัวอย่างเช่น
+        ถ้าโครงสร้างโฟลเดอร์เป็นแบบ\zcref{fig:folder-example} โดยไฟล์
+        \texttt{file.txt} มีเนื้อหาดังนี้
+        \begin{texsource}{file.txt}
+ไอน์สไตน์
+พลังค์
+แมกซ์เวลล์
+\end{texsource}
+        สามารถเพิ่มคำจากไฟล์ \texttt{file.txt} เข้าพจนานุกรมได้โดยตั้งค่า \\
+        \texttt{dictionaries=file.txt}
+        (เพิ่มเติมใน\zcref{sec:interword-expansion})
+        \begin{figure}[h]
+          \centering
+          \begin{forest}
+            dir tree [project/ [file.txt] [main.tex] [main.pdf] ]
+          \end{forest}
+          \caption{ตัวอย่างโครงสร้างโฟลเดอร์}
+          \label{fig:folder-example}
+        \end{figure}
+  \item[tcc-min-edge] (จำนวนเต็ม) หากคำใดมีตัวอักษรน้อยกว่าค่านี้
+        จะไม่ใส่จุดตัดคำด้วยยัติภังค์ มีค่าโดยปริยายเป็น \texttt{2}
+        (เพิ่มเติมใน\zcref{sec:interword-expansion})
+  \item[show-hyph] (\texttt{true}/\texttt{false})
+        เป็นเครื่องมือสำหรับผู้พัฒนาเพื่อตรวจสอบจุดตัดคำและตำแหน่งการใส่ยัติภังค์
+        ไม่ควรเปิดใช้ในเอกสารฉบับสมบูรณ์
+\end{description}
+
+ตัวอย่างการตั้งค่าและเรียกใช้ชุดคำสั่ง เช่น
+\begin{texsource}{}
+\usepackage[
+  interword-expansion=true,
+  interword-stretch=0.5,
+  interword-shrink=0.2,
+  intercluster-stretch=0,
+  dictionary=dict.txt,
+  tcc-min-edge=3,
+]{thai-segmentation}
+\end{texsource}
+
+\section{รายชื่อคำสั่ง}
+
+\begin{description}[font=\ttfamily]
+  \item[\textbackslash ThaiAddWords\{<คำที่หนึ่ง,คำที่สอง,...>\}] เพิ่มคำเข้าพจนานุกรมของ
+        \texttt{newmm} รับค่าเหมือน \texttt{dictionaries} ในการตั้งค่าชุดคำสั่ง
+        ตัวอย่างวิธีการใช้เช่น \\
+        \texttt{\textbackslash ThaiAddwords\{ลากรานจ์,แฮมิลตัน,แฮมิลโทเนียน\}}
+  \item[\textbackslash ThaiRemoveWords\{<คำที่หนึ่ง,คำที่สอง,...>\}] ลบคำจากพจนานุกรมของ
+        \texttt{newmm} รับค่าเหมือน \texttt{dictionaries} ในการตั้งค่าชุดคำสั่ง
+        ตัวอย่างการใช้เช่น \\
+        \texttt{\textbackslash ThaiRemoveWords\{ยั่งยืน,อย่างง่าย\}}
+  \item[\textbackslash ThaiAddHyphenation\{<คำ-ที่-หนึ่ง,คำ-ที่-สอง,...>\}] กำหนดตำแหน่งการใส่ยัติภังค์
+        กรณีที่ระบบตัดคำใส่จุดตัดคำที่ไม่ตรงกับการออกเสียงหรือคำอ่านธรรมชาติ
+        เช่น หากระบบตัดคำว่า "ลากรานจ์" เป็น "ลาก-รานจ์"
+        ซึ่งไม่ตรงกับคำอ่านธรรมชาติ สามารถแก้ไขให้ถูกต้องได้ด้วยคำสั่ง \\
+        \texttt{\textbackslash ThaiAddHyphenation\{ลา-กรานจ์\}}
+  \item[\textbackslash ThaiRemoveHyphenation\{คำ-ที่-หนึ่ง,คำ-ที่-สอง\}] ใช้เหมือน
+        \texttt{\textbackslash ThaiAddHyphenation}
+        แต่ใช้เพื่อลบคำสั่งบังคับยัติภังค์ที่กำหนดไว้ก่อนหน้า
+  \item[\textbackslash ThaiAddWordsFromFile\{<ไฟล์พจนานุกรม>\}] นำเข้าไฟล์พจนานุกรมเพิ่มเติม
+        การทำงานเหมือนการกำหนดผ่านการตั้งค่า \texttt{dictionary}
+        (\zcref{sec:configuration})
+  \item[\textbackslash ThaiAddSyllables\{<กลุ่มอักษรที่หนึ่ง,กลุ่มอักษรที่สอง,...>\}] เพิ่มกลุ่มอักษรเพื่อใช้ในการใส่ยัติภังค์
+  \item[\textbackslash ThaiRemoveSyllables\{<กลุ่มอักษรที่หนึ่ง,กลุ่มอักษรที่สอง>\}] ลบกลุ่มอักษรออกจากระบบการใส่ยัติภังค์
+\end{description}

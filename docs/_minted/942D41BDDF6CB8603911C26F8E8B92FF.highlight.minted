@@ -1,0 +1,10 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{\PYGZbs{}usepackage}[
+  interword\PYGZhy{}expansion=true,
+  interword\PYGZhy{}stretch=0.5,
+  interword\PYGZhy{}shrink=0.2,
+  intercluster\PYGZhy{}stretch=0,
+  dictionary=dict.txt,
+  tcc\PYGZhy{}min\PYGZhy{}edge=3,
+]\PYG{n+nb}{\PYGZob{}}thai\PYGZhy{}segmentation\PYG{n+nb}{\PYGZcb{}}
+\end{MintedVerbatim}

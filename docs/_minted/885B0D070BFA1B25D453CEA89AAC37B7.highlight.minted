@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+mkdir\PYG{+w}{ }\PYGZhy{}p\PYG{+w}{ }\PYG{k}{\PYGZdl{}(}kpsewhich\PYG{+w}{ }\PYGZhy{}var\PYGZhy{}value\PYG{+w}{ }TEXMFHOME\PYG{k}{)}/tex/latex
+\PYG{n+nb}{cd}\PYG{+w}{ }\PYG{k}{\PYGZdl{}(}kpsewhich\PYG{+w}{ }\PYGZhy{}var\PYGZhy{}value\PYG{+w}{ }TEXMFHOME\PYG{k}{)}/tex/latex
+git\PYG{+w}{ }clone\PYG{+w}{ }https://github.com/AtomThum/thai\PYGZhy{}segmentation
+rm\PYG{+w}{ }\PYGZhy{}rf\PYG{+w}{ }.git
+\end{MintedVerbatim}
