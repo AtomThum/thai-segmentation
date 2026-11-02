@@ -30,9 +30,12 @@
   }
 }
 
-\NewDocumentCommand{\texlogo}{}{{\ncmfont \TeX\ }}
-\NewDocumentCommand{\lualatexlogo}{}{{\ncmfont Lua\LaTeX\ }}
-\NewDocumentCommand{\latexlogo}{}{{\ncmfont \LaTeX\ }}
+\usepackage{metalogo}
+\NewDocumentCommand{\texlogo}{}{{\ncmfont\mdseries\TeX\ }}
+\NewDocumentCommand{\lualatexlogo}{}{{\ncmfont\upshape\mdseries\LuaLaTeX\ }}
+\NewDocumentCommand{\latexlogo}{}{{\ncmfont\mdseries\LaTeX\ }}
+\NewDocumentCommand{\xelatexlogo}{}{{\ncmfont\upshape\mdseries\XeLaTeX\ }}
+\NewDocumentCommand{\pdftexlogo}{}{{\ncmfont\mdseries{pdf}\TeX\ }}
 
 \pretolerance=1000
 \tolerance=5000
@@ -47,7 +50,7 @@
 
 \begin{abstract}
   \setSpacing{1.5}
-  ชุดคำสั่งนี้ สร้างมาเพื่อตัดคำภาษาไทยใน \lualatexlogo โดยใช้ขั้นตอนวิธี \texttt{newmm} จากโปรแกรม PyThaiNLP \parencite{pythainlp-proceedings}
+  ชุดคำสั่งนี้ใช้ตัดคำภาษาไทยใน \lualatexlogo โดยใช้ขั้นตอนวิธี \texttt{newmm} จากโปรแกรม PyThaiNLP \parencite{pythainlp-proceedings}
   ซึ่งเป็นขั้นตอนวิธีตัดคำภาษาไทยแบบใช้พจนานุกรม
   ผู้ใช้งานสามารถเพิ่มคำหรือลบคำออกจากพจนานุกรมได้
   ระบุตำแหน่งที่จะแยกคำด้วยยัติภังค์ได้

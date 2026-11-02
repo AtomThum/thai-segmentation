@@ -4,15 +4,21 @@
 
 \begin{enumerate}
   \item \lualatexlogo รุ่น (เวอร์ชัน) หลังเดือนตุลาคม ปี ค.ศ. 2025 (พ.ศ. 2568)
-  \item ชุดคำสั่ง \texttt{fontspec} และ \texttt{polyglossia} ของ \latexlogo
+        \\
+        \textbf{หมายเหตุ : ชุดคำสั่งนี้ ไม่รองรับ \pdftexlogo หรือ \xelatexlogo}
+  \item ชุดคำสั่งของ \latexlogo ที่ใช้ตั้งเอกสารเป็นภาษาไทย
+        มีให้เลือกสองชุดคำสั่ง ได้แก่ \texttt{babel} กับ \texttt{polyglossia}
+        ถ้าใช้ \texttt{polyglossia} ต้องมีชุดคำสั่ง \texttt{fontspec} ด้วย
   \item ชุดแบบอักษรไทย (Thai font)
+  \item แนะนำให้ติดตั้ง \texttt{microtype} ด้วย เพื่อให้การจัดวางตัวอักษร
+        (typography) สวยงามกว่าเดิม แต่จะไม่ใช้ก็ได้
 \end{enumerate}
 
-\paragraph{หมายเหตุ :}
+\paragraph{สำหรับผู้ใช้ Overleaf :}
 
-ณ ขณะนี้ ยังไม่สามารถใช้ชุดคำสั่งนี้กับชุดคำสั่ง \texttt{babel} ได้
+เตรียมแค่ชุดแบบอักษรไทยก็เพียงพอแล้ว
 
-\section{วิธีการดาวน์โหลดชุดคำสั่งจากแหล่งต้นทาง}
+\section{วิธีการดาวน์โหลดชุดคำสั่ง}
 
 \paragraph{ในระบบปฎิบัติการ Linux :}
 
@@ -36,24 +42,49 @@ kpsewhich thai-segmentation.sty
   \item ถ้าไม่ได้ตั้งค่า \texttt{TEXMFHOME} ไว้ ให้สร้างโฟลเดอร์ \\
         \texttt{\%USERPROFILE\%\textbackslash texmf\textbackslash
           tex\textbackslash latex\textbackslash thai-segmentation}
-  \item ไปที่ยูอาร์แอล \url{https://github.com/AtomThum/thai-segmentation}
-  \item กดที่ปุ่ม \texttt{Code} สีเขียว แล้วกดดาวน์โหลด ZIP ไฟล์
+  \item ไปที่ยูอาร์แอล \\
+        \url{https://github.com/AtomThum/thai-segmentation/archive/refs/heads/main.zip}
+        เพื่อดาวน์โหลดไฟล์ \texttt{thai-segmentation-main.zip}
   \item แตกไฟล์ \texttt{thai-segmentation-main.zip}
-  \item คัดลอกไฟล์ในโฟลเดอร์ที่แตกออกมาไปที่ \\
+  \item คัดลอกไฟล์ทั้งหมดในโฟลเดอร์ที่แตกออกมาไปที่ \\
         \texttt{\%USERPROFILE\%\textbackslash tex\textbackslash
           latex\textbackslash thai-segmentation}
 \end{enumerate}
 
+\paragraph{ใน Overleaf :}
+
+\begin{enumerate}
+  \item ไปที่ยูอาร์แอล \\
+        \url{https://github.com/AtomThum/thai-segmentation/archive/refs/heads/main.zip}
+        เพื่อดาวน์โหลดไฟล์ \texttt{thai-segmentation-main.zip}
+  \item แตกไฟล์ \texttt{thai-segmentation-main.zip}
+  \item อัพโหลดไฟล์และโฟลเดอร์ต่อไปนี้ลงใน Overleaf
+        \begin{itemize}
+          \item \texttt{data/}
+          \item \texttt{newmm/}
+          \item \texttt{newmm.lua}
+          \item \texttt{show\textunderscore hyph.lua}
+          \item \texttt{thai\textunderscore breakpoints.lua}
+          \item \texttt{thai\textunderscore linebreak.lua}
+          \item \texttt{thai\textunderscore segmentation.lua}
+          \item \texttt{thai\textunderscore segmentation.sty}
+        \end{itemize}
+\end{enumerate}
+
 \paragraph{ในระบบปฎิบัติการ Macs :}
 
-ยังไม่มีข้อมูลเนื่องจากผู้พัฒนาชุดคำสั่งไม่มีเงินเพื่อซื้อ Macbook
+ยังไม่มีข้อมูลเนื่องจากผู้พัฒนาไม่มีเงินเพื่อซื้อ Macbook
 
 \section{การเรียกใช้งานชุดคำสั่งและการตั้งค่าเอกสาร}
 \label{sec:configuration}
 
-ตั้งเอกสารให้ใช้ \lualatexlogo และตั้งให้ \latexlogo ใช้ภาษาไทยโดยใช้
-\texttt{polyglossia} เลือกชุดแบบอักษรที่ต้องการโดยใช \texttt{fontspec}
-ตัวอย่างเช่น
+ก่อนจะเรียกใช้ชุดคำสั่ง ต้องตั้งให้เอกสารให้เป็นภาษาไทย \lualatexlogo
+และใช้แบบอักษรไทย มีอยู่สองวิธีดังนี้
+
+\paragraph{ผ่านชุดคำสั่ง \texttt{polyglossia} :}
+
+ให้เรียกใช้ชุดคำสั่ง \texttt{fontspec} ก่อนเรียกใช้ \texttt{polyglossia}
+หลังจากนั้นจึงเลือกแบบอักษรที่ต้องการโดยใช้ \texttt{fontspec} ตัวอย่างเช่น
 
 \begin{texsource}{}
 % !TEX program = lualatex
@@ -67,13 +98,37 @@ kpsewhich thai-segmentation.sty
 \newfontfamily{\englishfont}{Sarabun}[Ligatures=TeX]
 
 \setdefaultlanguage{thai}
-\setmainlanguage{thai}
 \setotherlanguage{english}
 \end{texsource}
 
-ณ ขณะนี้ ยังไม่สามารถใช้ชุดคำสั่งนี้กับชุดคำสั่ง \texttt{babel} ได้
+สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{fontspec}
+ได้ที่เอกสารสำหรับผู้ใช้งาน \texttt{fontspec} \parencite{fontspec-docs} และกับ
+\texttt{polyglossia} ได้ที่เอกสารสำหรับผู้ใช้งานชุดคำสั่ง \texttt{polyglossia}
+\parencite{polyglossia-docs}
 
-สามารถเรียกใช้ชุดคำสั่งจาก \texttt{thai-segmentation} ได้โดย
+\paragraph{ผ่านชุดคำสั่ง \texttt{babel} :}
+
+ต้องตั้งค่าให้ \texttt{babel} ไม่ใช้ระบบตัดคำไทยของตัวเองโดยใช้คำสั่ง
+
+\begin{texsource}{}
+\babelprovide[hyphenrules=nohyphenation]{thai}
+\end{texsource}
+
+แล้วค่อยใช้ \texttt{babel} ตั้งเอกสารให้ใช้แบบอักษรไทยโดยคำสั่ง
+\texttt{babelfont} ตัวอย่างการตั้งค่าเอกสารด้วย \texttt{babel} เช่น
+
+\begin{texsource}{}
+% !TEX program = lualatex
+\usepackage[thai,english]{babel}
+\usepackage[hyphenrules=nohyphenation]{thai}
+\babelfont{rm}{Sarabun}
+\end{texsource}
+
+สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{babel}
+ได้ที่เอกสารสำหรับผู้ใช้งานชุดคำสั่ง \texttt{babel} \parencite{babel-docs}
+
+หลังจากตั้งค่าเอกสารให้เป็นภาษาไทยเสร็จ ถึงสามารถเรียกใช้ชุดคำสั่ง
+\texttt{thai-segmentation} ได้โดยใช้คำสั่ง
 
 \begin{texsource}{}
   \usepackage[<options>]{thai-segmentation}
