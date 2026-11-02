@@ -164,8 +164,16 @@ Example:
 
 ### Commands
 
-Each command takes a comma-separated list. They can be used anywhere in the
-document.
+**The commands that takes a comma-separated list cannot have spaces inbetween
+the commas.** This limitation is currently due to how TeX processes tokens. Will
+be fixed in the future.
+
+Also due to how TeX queues hyphenation and line breaking, all these commands are
+global. It can be placed anywhere in the document and _would affect the entire
+documents._ Methods of locally circumventing these hyphenations and linebreaking
+if it isn't satisfactory enough, which honestly it should, is to put the
+unhyphenated part inside an `hbox`, and manually insert a discretionary node
+using `discretionary` if needed.
 
 - `\ThaiAddWords{<คำที่หนึ่ง,คำที่สอง,...>}` adds words to the dictionary.
 - `\ThaiRemoveWords{<คำที่หนึ่ง,คำที่สอง,...>}` removes words from the
@@ -183,14 +191,12 @@ document.
 - `\ThaiRemoveSyllables{<กลุ่มอักษรที่หนึ่ง,กลุ่มอักษรที่สอง,...>}` removes
   syllables from that list.
 
-### When edits take effect
+### More details to when edits take effect
 
-Segmentation happens when TeX hyphenates a list: at the end of each paragraph,
-and when an `\hbox` is built. A dictionary edit or `\ThaiInterclusterStretch`
-therefore affects the **whole paragraph it appears in** and every later one,
-including the part of that paragraph before the command. It does not affect
-boxes that were already built. All edits are global; TeX groups do not limit
-them.
+Segmentation happens when TeX hyphenates a list, i.e., at the end of each
+paragraph, and when an `\hbox` is built. A dictionary edit or
+`\ThaiInterclusterStretch` therefore affects everything globally. However, it
+does not affect boxes that were already built.
 
 ### How hyphenation points are chosen
 
@@ -214,7 +220,6 @@ Where TeX breaks at a hyphenation point, it prints a `-`, and the cost is
   colour change (`\textcolor{red}{สวัส}ดี`), a box or an explicit kern, splits
   it into two pieces that are segmented separately. A font change such as
   `\textbf` does not.
-- The old `python-path` option was removed. Delete it from your preamble.
 
 ## Attribution and licensing
 
