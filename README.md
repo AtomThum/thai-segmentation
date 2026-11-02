@@ -1,6 +1,6 @@
 # thai-segmentation
 
-สำหรับภาษาไทย :
+สำหรับคู่มือการใช้งานภาษาไทย (แนะนำว่าควรใช้คู่มือนี้มากกว่า README.md) :
 <https://github.com/AtomThum/thai-segmentation/blob/main/docs/main.pdf>
 
 `thai-segmentation` breaks lines in Thai text in LuaLaTeX documents. Thai has no
@@ -23,29 +23,119 @@ Everything runs inside LuaLaTeX. No `--shell-escape` are needed.
 
 - LuaLaTeX with version after November of 2025. pdfLaTeX and XeLaTeX is NOT
   supported.
-- `polyglossia` and `fontspec` package. `babel` package is not yet supported,
-  but is in the roadmap.
+- Any internalization package in LaTeX. You have two options:
+  - `polyglossia`, along with `fontspec`, or
+  - `babel`
+- Fonts containing Thai scripts
+- (Optional) The package `microtype` is recommended for more appealing
+  typography.
 
-## Installation
+**To overleaf users :** only installing the fonts containing Thai scripts is
+enough.
 
-Copy the whole `thai-segmentation` directory, including `newmm/` and `data/`,
-into your personal texmf tree:
+## Installation (from source, or when the package hasn't been published to CTAN)
 
-```text
-~/texmf/tex/latex/thai-segmentation/
+### In Linux
+
+Copy the following into bash:
+
+```bash
+mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
+cd $(kpsewhich -var-value TEXMFHOME)/tex/latex
+git clone https://github.com/AtomThum/thai-segmentation
+rm -rf .git
 ```
 
-Then run `mktexlsr` if your TeX distribution needs it. Placing the directory
-next to your document also works.
+You can check whether the installation is complete or not via
 
-## Usage
+```bash
+kpsewhich thai-segmentation.sty
+```
+
+### In Windows
+
+- If `TEXMFHOME` environment variable hasn't been set, create the folder
+  `%USERPROFILE%\texmf\tex\latex\thai-segmentation`
+- Go to the URL
+  `https://github.com/AtomThum/thai-segmentation/archive/refs/heads/main.zip` to
+  download the file `thai-segmentation-main.zip`
+- Extract the downloaded ZIP file, and copy all the folder contents into the
+  folder `%USERPROFILE%\texmf\tex\latex\thai-segmentation`
+
+### In Overleaf
+
+- Go to the URL
+  `https://github.com/AtomThum/thai-segmentation/archive/refs/heads/main.zip` to
+  download the file `thai-segmentation-main.zip`
+- Extract the downloaded ZIP file
+- Copy the following files and folders into Overleaf (folders end with a slash)
+  - data/
+  - newmm/
+  - newmm.lua
+  - show_hyph.lua
+  - thai_breakpoints.lua
+  - thai_linebreak.lua
+  - thai_segmentation.lua
+  - thai_segmentation.sty
+
+### In MacOS
+
+The author of this package does not have the money to buy a MacOS, so he can't
+test the installation methods there. Any contributions from MacOS users are
+welcomed.
+
+## Usage and commands
+
+### Document setup
+
+The document must be compiled using LuaLaTeX, and load either polyglossia or
+babel before calling the `thai-segmentation` package.
+
+For polyglossia users, `fontspec` must be loaded first, then `polyglossia`, then
+configure fontspec to use Thai fonts. For example,
+
+```latex
+% !TEX program = lualatex
+\documentclass{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\newfontfamily{\thaifont}{Sarabun}[Script=Thai]
+\newfontfamily{\thaifontsf}{Athiti}[Script=Thai]
+\newfontfamily{\englishfont}{Sarabun}
+
+\setdefaultlanguage{thai}
+\setotherlanguage{english}
+```
+
+For babel users, we must tell `babel` to not use their own segmentation system
+by using
+
+```latex
+\babelprovide[hyphenrules=nohyphenation]{thai}
+```
+
+Then tell babel to use Thai fonts. For example,
+
+```latex
+% !TEX program = lualatex
+\usepackage[thai,english]{babel}
+\usepackage[hyphenrules=nohyphenation]{thai}
+\babelfont{rm}{Sarabun}
+```
+
+More infos on using fontspec, polyglossia, and babel can be found in their
+respective texdoc documentation.
+
+Afterwards, we can call the `thai-segmentation` package via
 
 ```latex
 \usepackage[<options>]{thai-segmentation}
 ```
 
-Segmentation runs on all text with Thai characters. Latin and other scripts are
-still hyphenated by TeX's own patterns, as usual.
+Note that segmentation only runs on Thai characters. Other languages are still
+hyphenated using TeX backend as usual.
 
 ### Options
 
