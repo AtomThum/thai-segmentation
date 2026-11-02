@@ -93,8 +93,8 @@
 \NewDocumentCommand{\ThaiRemoveSyllables}{m}{ \__thaiseg_call:nn { remove_syllables } {#1} }
 % Fixed break points, like \hyphenation: \ThaiHyphenation{ไฮ-เซน-เบิร์ก}. An entry
 % without hyphens is never broken. The word is added to the dictionary too.
-\NewDocumentCommand{\ThaiHyphenation}{m}{ \__thaiseg_call:nn { hyphenation } {#1} }
-\NewDocumentCommand{\ThaiRemoveHyphenation}{m}{ \__thaiseg_call:nn { remove_hyphenation } {#1} }
+\NewDocumentCommand{\ThaiAddHyphenations}{m}{ \__thaiseg_call:nn { hyphenation } {#1} }
+\NewDocumentCommand{\ThaiRemoveHyphenations}{m}{ \__thaiseg_call:nn { remove_hyphenation } {#1} }
 % Intercluster stretch in pt, as the intercluster-stretch key; 0 turns it off.
 % Global, and like the edits above it applies from the paragraph it appears in.
 \NewDocumentCommand{\ThaiInterclusterStretch}{m}

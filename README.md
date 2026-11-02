@@ -102,7 +102,6 @@ configure fontspec to use Thai fonts. For example,
 \usepackage{polyglossia}
 
 \newfontfamily{\thaifont}{Sarabun}[Script=Thai]
-\newfontfamily{\thaifontsf}{Athiti}[Script=Thai]
 \newfontfamily{\englishfont}{Sarabun}
 
 \setdefaultlanguage{thai}
@@ -171,10 +170,10 @@ document.
 - `\ThaiAddWords{<คำที่หนึ่ง,คำที่สอง,...>}` adds words to the dictionary.
 - `\ThaiRemoveWords{<คำที่หนึ่ง,คำที่สอง,...>}` removes words from the
   dictionary.
-- `\ThaiHyphenation{<คำ-ที่-หนึ่ง,คำ-ที่-สอง>}` forces where a word may be
-  hyphenated. A word input into `\ThaiHyphenation` written without hyphens is
-  never hyphenated. The word is also added to the dictionary.
-- `\ThaiRemoveHyphenation{<คำ-ที่-หนึ่ง,คำ-ที่-สอง>}` forgets a fixed
+- `\ThaiAddHyphenations{<คำ-ที่-หนึ่ง,คำ-ที่-สอง>}` forces where a word may be
+  hyphenated. A word input into `\ThaiAddHyphenations` written without hyphens
+  is never hyphenated. The word is also added to the dictionary.
+- `\ThaiRemoveHyphenations{<คำ-ที่-หนึ่ง,คำ-ที่-สอง>}` forgets a fixed
   hyphenation. You may write the word with or without hyphens. The word stays in
   the dictionary.
 - `\ThaiAddWordsFromFile{<file>}` adds every word in a file, one per line. It
@@ -199,8 +198,8 @@ Only words longer than five characters get hyphenation points. The word is split
 into syllables using the syllable list, and any syllable longer than four
 characters is split again at Thai character cluster boundaries. Points closer to
 either end of the word than `tcc-min-edge` are dropped. If a word breaks
-somewhere wrong, fix it with `\ThaiHyphenation`, or teach the syllable list with
-`\ThaiAddSyllables`.
+somewhere wrong, fix it with `\ThaiAddHyphenations`, or teach the syllable list
+with `\ThaiAddSyllables`.
 
 Where TeX breaks at a hyphenation point, it prints a `-`, and the cost is
 `\hyphenpenalty`. A break between two words prints nothing and costs nothing.

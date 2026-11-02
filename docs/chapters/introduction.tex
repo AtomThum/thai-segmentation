@@ -1,4 +1,5 @@
 \chapter{วิธีการใช้งานและการตั้งค่าเบื้องต้น}
+\label{sec:introduction}
 
 \section{ความต้องการขั้นต่ำของชุดคำสั่ง}
 
@@ -93,18 +94,19 @@ kpsewhich thai-segmentation.sty
 \usepackage{fontspec}
 \usepackage{polyglossia}
 
-\newfontfamily{\thaifont}{Sarabun}[Script=Thai]
-\newfontfamily{\thaifontsf}{Athiti}[Script=Thai,Scale=MatchUppercase]
-\newfontfamily{\englishfont}{Sarabun}[Ligatures=TeX]
+\setdefaultlanguage{thai} % ตั้งเอกสารให้เป็นภาษาไทย
+\setotherlanguage{english} % ตั้งว่า สามารถมีภาษาอังกฤษแทรกได้
 
-\setdefaultlanguage{thai}
-\setotherlanguage{english}
+\newfontfamily{\thaifont}{Sarabun}[Script=Thai] % ตั้งแบบอักษรภาษาไทยให้เป็น Sarabun
+\newfontfamily{\englishfont}{Sarabun}[Ligatures=TeX] % ตั้งแบบอักษรอังกฤษให้เป็น Sarabun เช่นกัน
+% สามารถเปลี่ยนชื่อแบบอักษรที่ต้องการใช้ได้
+% ถ้าแบบอักษรไม่ใช่ไฟล์ที่ลงบนเครื่อง สามารถตั้ง Path=... ได้
 \end{texsource}
 
 สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{fontspec}
-ได้ที่เอกสารสำหรับผู้ใช้งาน \texttt{fontspec} \parencite{fontspec-docs} และกับ
-\texttt{polyglossia} ได้ที่เอกสารสำหรับผู้ใช้งานชุดคำสั่ง \texttt{polyglossia}
-\parencite{polyglossia-docs}
+ได้ที่เอกสารสำหรับผู้ใช้งาน \texttt{fontspec} และ \texttt{polyglossia}
+ได้ที่คู่มือชุดคำสั่ง \parencite{fontspec-docs} และ \parencite{polyglossia-docs}
+ตามลำดับ
 
 \paragraph{ผ่านชุดคำสั่ง \texttt{babel} :}
 
@@ -120,14 +122,21 @@ kpsewhich thai-segmentation.sty
 \begin{texsource}{}
 % !TEX program = lualatex
 \usepackage[thai,english]{babel}
-\usepackage[hyphenrules=nohyphenation]{thai}
-\babelfont{rm}{Sarabun}
+\usepackage[hyphenrules=nohyphenation]{thai} % ปิดการตัดคำของ babel
+\babelfont{rm}{Sarabun} % ตั้งแบบอักษรปกติของเอกสาร Sarabun
 \end{texsource}
 
-สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{babel}
-ได้ที่เอกสารสำหรับผู้ใช้งานชุดคำสั่ง \texttt{babel} \parencite{babel-docs}
+สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{babel} ได้ที่คู่มือชุดคำสั่ง
+\texttt{babel} \parencite{babel-docs}
 
-หลังจากตั้งค่าเอกสารให้เป็นภาษาไทยเสร็จ ถึงสามารถเรียกใช้ชุดคำสั่ง
+ถ้ามีชุดคำสั่ง \texttt{microtype}
+แนะนำให้เรียกใช้ด้วยเพื่อการจัดวางตัวอักษรที่สวยงามกว่าเดิม โดยใช้คำสั่ง
+
+\begin{texsource}{}
+\usepackage[protrusion=true,expansion=true,tracking=true]{microtype}
+\end{texsource}
+
+หลังจากตั้งค่าเอกสารให้เป็นภาษาไทยเสร็จ ถึงเรียกใช้ชุดคำสั่ง
 \texttt{thai-segmentation} ได้โดยใช้คำสั่ง
 
 \begin{texsource}{}
@@ -195,6 +204,11 @@ kpsewhich thai-segmentation.sty
 
 \section{รายชื่อคำสั่ง}
 
+\paragraph{หมายเหตุ :}
+
+ในคำสั่งที่รับค่าเป็นรายการคำ เช่น \texttt{\textbackslash ThaiAddWords}
+ห้ามเว้นวรรคระหว่างลูกน้ำเด็ดขาด
+
 \begin{description}[font=\ttfamily]
   \item[\textbackslash ThaiAddWords\{<คำที่หนึ่ง,คำที่สอง,...>\}] เพิ่มคำเข้าพจนานุกรมของ
         \texttt{newmm} รับค่าเหมือน \texttt{dictionaries} ในการตั้งค่าชุดคำสั่ง
@@ -204,13 +218,13 @@ kpsewhich thai-segmentation.sty
         \texttt{newmm} รับค่าเหมือน \texttt{dictionaries} ในการตั้งค่าชุดคำสั่ง
         ตัวอย่างการใช้เช่น \\
         \texttt{\textbackslash ThaiRemoveWords\{ยั่งยืน,อย่างง่าย\}}
-  \item[\textbackslash ThaiAddHyphenation\{<คำ-ที่-หนึ่ง,คำ-ที่-สอง,...>\}] กำหนดตำแหน่งการใส่ยัติภังค์
+  \item[\textbackslash ThaiAddHyphenations\{<คำ-ที่-หนึ่ง,คำ-ที่-สอง,...>\}] กำหนดตำแหน่งการใส่ยัติภังค์
         กรณีที่ระบบตัดคำใส่จุดตัดคำที่ไม่ตรงกับการออกเสียงหรือคำอ่านธรรมชาติ
         เช่น หากระบบตัดคำว่า "ลากรานจ์" เป็น "ลาก-รานจ์"
         ซึ่งไม่ตรงกับคำอ่านธรรมชาติ สามารถแก้ไขให้ถูกต้องได้ด้วยคำสั่ง \\
-        \texttt{\textbackslash ThaiAddHyphenation\{ลา-กรานจ์\}}
-  \item[\textbackslash ThaiRemoveHyphenation\{คำ-ที่-หนึ่ง,คำ-ที่-สอง\}] ใช้เหมือน
-        \texttt{\textbackslash ThaiAddHyphenation}
+        \texttt{\textbackslash ThaiAddHyphenations\{ลา-กรานจ์\}}
+  \item[\textbackslash ThaiRemoveHyphenations\{คำ-ที่-หนึ่ง,คำ-ที่-สอง\}] ใช้เหมือน
+        \texttt{\textbackslash ThaiAddHyphenations}
         แต่ใช้เพื่อลบคำสั่งบังคับยัติภังค์ที่กำหนดไว้ก่อนหน้า
   \item[\textbackslash ThaiAddWordsFromFile\{<ไฟล์พจนานุกรม>\}] นำเข้าไฟล์พจนานุกรมเพิ่มเติม
         การทำงานเหมือนการกำหนดผ่านการตั้งค่า \texttt{dictionary}

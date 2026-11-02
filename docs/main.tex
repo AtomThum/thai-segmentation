@@ -37,6 +37,9 @@
 \NewDocumentCommand{\xelatexlogo}{}{{\ncmfont\upshape\mdseries\XeLaTeX\ }}
 \NewDocumentCommand{\pdftexlogo}{}{{\ncmfont\mdseries{pdf}\TeX\ }}
 
+\ThaiAddWords{กลุ่มตัวอักษร,กลุ่มตัวอักษรไทย}
+\ThaiAddHyphenations{ตำ-แหน่ง,เหมือน}
+
 \pretolerance=1000
 \tolerance=5000
 \hyphenpenalty=500
@@ -59,13 +62,17 @@
 
 \tableofcontents*
 
-\include{chapters/introduction}
-\include{chapters/word-segmenting}
+\input{chapters/introduction}
+\input{chapters/word-segmenting}
 
 \chapter{กลุ่มตัวอักษร และ การใช้ยัติภังค์}
 \label{sec:intercluster-stretch}
 
 \chapter{การทำให้เกิดผล}
+
+\appendix
+
+\input{chapters/ai-disclosure}
 
 \printbibliography[title=บรรณานุกรม]
 
