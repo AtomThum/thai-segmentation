@@ -1,8 +1,0 @@
-\usepackage[
-  interword-expansion=true,
-  interword-stretch=0.5,
-  interword-shrink=0.2,
-  intercluster-stretch=0,
-  dictionary=dict.txt,
-  tcc-min-edge=3,
-]{thai-segmentation}

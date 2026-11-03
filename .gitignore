@@ -26,3 +26,5 @@
 **.theorems
 **.pygstyle
 _minted/
+**.bbl-SAVE-ERROR
+**.listing
