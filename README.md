@@ -37,6 +37,9 @@ enough.
 
 ### In Linux
 
+Make sure git is installed. The installation method depends on your Linux
+distribution.
+
 Copy the following into bash:
 
 ```bash
@@ -44,6 +47,7 @@ mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
 cd $(kpsewhich -var-value TEXMFHOME)/tex/latex
 git clone https://github.com/AtomThum/thai-segmentation
 rm -rf .git
+texhash
 ```
 
 You can check whether the installation is complete or not via
@@ -61,6 +65,16 @@ kpsewhich thai-segmentation.sty
   download the file `thai-segmentation-main.zip`
 - Extract the downloaded ZIP file, and copy all the folder contents into the
   folder `%USERPROFILE%\texmf\tex\latex\thai-segmentation`
+
+If when you're using the package in LaTeX, and it can't find the package path,
+update the cache. Methods are different on whether you're using MiKTeX or TeX
+Live
+
+If you're using MiKTeX console, go to `Tasks` and click
+`Refresh file name database`. Or, run `initexmf --update-fndb` in the
+powershell.
+
+If you're using TeX Live, run `texhash` or `mktexlsr` in the powershell
 
 ### In Overleaf
 
@@ -80,9 +94,33 @@ kpsewhich thai-segmentation.sty
 
 ### In MacOS
 
-The author of this package does not have the money to buy a MacOS, so he can't
-test the installation methods there. Any contributions from MacOS users are
-welcomed.
+The author of this package does not have a MacBook, so he can't test the
+installation methods. Any contributions from MacOS users are welcomed. However,
+the method should be identical to installing any TeX package into the texmf
+tree. The command (if it works), should be identical to the installation in
+Linux.
+
+First, install git
+
+```bash
+xcode-select --install
+```
+
+Then, verify the git installation by using
+
+```bash
+git --version
+```
+
+Proceed with the package installation via
+
+```bash
+mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
+cd $(kpsewhich -var-value TEXMFHOME)/tex/latex
+git clone https://github.com/AtomThum/thai-segmentation
+rm -rf .git
+texhash
+```
 
 ## Usage and commands
 
@@ -165,15 +203,12 @@ Example:
 ### Commands
 
 **The commands that takes a comma-separated list cannot have spaces inbetween
-the commas.** This limitation is currently due to how TeX processes tokens. Will
-be fixed in the future.
+the commas.** This limitation is currently due to how TeX processes tokens,
+which will be fixed in the future.
 
-Also due to how TeX queues hyphenation and line breaking, all these commands are
-global. It can be placed anywhere in the document and _would affect the entire
-documents._ Methods of locally circumventing these hyphenations and linebreaking
-if it isn't satisfactory enough, which honestly it should, is to put the
-unhyphenated part inside an `hbox`, and manually insert a discretionary node
-using `discretionary` if needed.
+These commands can be placed anywhere in the document and _would affect anything
+that comes after it._ However, they won't affect anything that has already been
+built.
 
 - `\ThaiAddWords{<คำที่หนึ่ง,คำที่สอง,...>}` adds words to the dictionary.
 - `\ThaiRemoveWords{<คำที่หนึ่ง,คำที่สอง,...>}` removes words from the
@@ -191,12 +226,10 @@ using `discretionary` if needed.
 - `\ThaiRemoveSyllables{<กลุ่มอักษรที่หนึ่ง,กลุ่มอักษรที่สอง,...>}` removes
   syllables from that list.
 
-### More details to when edits take effect
-
-Segmentation happens when TeX hyphenates a list, i.e., at the end of each
-paragraph, and when an `\hbox` is built. A dictionary edit or
-`\ThaiInterclusterStretch` therefore affects everything globally. However, it
-does not affect boxes that were already built.
+If these hyphenations and linebreaking isn't satisfactory enough, which honestly
+it should have been satisfactory enough, is to control it more locally using an
+`hbox`, and manually insert a discretionary node using `discretionary` if
+needed.
 
 ### How hyphenation points are chosen
 

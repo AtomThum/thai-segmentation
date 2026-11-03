@@ -20,7 +20,7 @@
 \setmainlanguage{thai}
 \setotherlanguage{english}
 
-\usepackage[thai-segmentation=true,interword-expansion=true,interword-stretch=0.8,interword-shrink=0.3]{thai-segmentation}
+\usepackage[thai-segmentation=true,interword-expansion=true,interword-stretch=0.7,interword-shrink=0.3,intercluster-stretch=0]{thai-segmentation}
 \usepackage[protrusion=true,expansion=true,tracking=true]{microtype}
 
 %%% Colors
@@ -144,7 +144,8 @@
   sharp corners,
   fonttitle=\ttfamily,
   left=10mm,
-  title={#1}
+  title={#1},
+  breakable
 }
 \NewTCBListing{bashsource}{ m }{
   listing engine=minted,
@@ -163,7 +164,8 @@
   sharp corners,
   fonttitle=\ttfamily,
   left=10mm,
-  title={#1}
+  title={#1},
+  breakable, enhanced
 }
 \usemintedstyle{algol_nu}
 \usepackage[inline]{enumitem}

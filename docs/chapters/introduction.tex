@@ -23,13 +23,17 @@
 
 \paragraph{ในระบบปฎิบัติการ Linux :}
 
-ให้รันคำสั่งต่อไปนี้ใน bash
+ต้องมีโปรแกรม \texttt{git} สามารถดาวน์โหลดโปรแกรมได้ผ่านคู่มือดาวน์โหลดของ
+\texttt{git} \parencite{git-installation}
+
+เมื่อได้ \texttt{git} แล้ว ให้รันคำสั่งต่อไปนี้ใน bash (terminal)
 
 \begin{bashsource}{}
 mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
 cd $(kpsewhich -var-value TEXMFHOME)/tex/latex
 git clone https://github.com/AtomThum/thai-segmentation
 rm -rf .git
+texhash
 \end{bashsource}
 
 สามารถตรวจสอบว่าชุดคำสั่งพร้อมใช้งานได้ด้วย
@@ -52,6 +56,17 @@ kpsewhich thai-segmentation.sty
           tex\textbackslash latex\textbackslash thai-segmentation}
 \end{enumerate}
 
+ถ้าลองเรียกใช้ชุดคำสั่งใน \latexlogo แล้วโปรแกรมหาชุดคำสั่งไม่เจอ ให้ปรับแคชของ
+\latexlogo เป็นปัจจุบัน มีอยู่สองวิธี ขึ้นอยู่กับ \latexlogo ที่ผู้ใช้งานใช้
+
+\begin{description}[font=\ttfamily\bfseries]
+  \item[MiKTeX] เปิด \texttt{MiKTeX console} ไปที่ \texttt{Tasks} แล้วกด
+        \texttt{Refresh file name database} หรือ จะใช้คำสั่ง
+        \texttt{initexmf --update -fndb} ใน \texttt{powershell} ก็ได้
+  \item[TeX Live] ใช้คำสั่ง \texttt{texhash} หรือ \texttt{mktexlsr} ใน
+        \texttt{powershell}
+\end{description}
+
 \paragraph{ใน Overleaf :}
 
 \begin{enumerate}
@@ -72,9 +87,37 @@ kpsewhich thai-segmentation.sty
         \end{itemize}
 \end{enumerate}
 
-\paragraph{ในระบบปฎิบัติการ Macs :}
+\paragraph{ใน MacOS :}
 
-ยังไม่มีข้อมูลเนื่องจากผู้พัฒนาไม่มีเงินเพื่อซื้อ Macbook
+เนื่องจากสถานะทางการเงินของผู้พัฒนา จึงไม่มี MacBook
+และไม่สามารถทดสอบการดาวน์โหลดชุดคำสั่งบน MacOS ได้ ถึงอย่างไรก็ตาม
+คำสั่งดาวน์โหลด\emph{ควรจะ}เหมือนกับคำสั่งใน Linux
+ทางผู้พัฒนายินดีรับข้อเสนอแนะจากผู้ใช้งาน MacOS เสมอ
+สามารถติดต่อผู้พัฒนาได้ผ่านทาง
+\url{https://github.com/AtomThum/thai-segmentation/issues/new}
+
+สามารถดาวน์โหลดโปรแกรม \texttt{git} ได้ผ่าน
+
+\begin{bashsource}{}
+xcode-select --install
+\end{bashsource}
+
+ตรวจสอบโปรแกรม \texttt{git} ได้ผ่าน
+
+\begin{bashsource}{}
+git --version
+\end{bashsource}
+
+เมื่อดาวน์โหลดโปรแกรม \texttt{git} เรียบร้อยแล้ว
+สามารถดาวน์โหลดชุดคำสั่งนี้ได้ผ่าน
+
+\begin{bashsource}{}
+mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
+cd $(kpsewhich -var-value TEXMFHOME)/tex/latex
+git clone https://github.com/AtomThum/thai-segmentation
+rm -rf .git
+texhash
+\end{bashsource}
 
 \section{การเรียกใช้งานชุดคำสั่งและการตั้งค่าเอกสาร}
 \label{sec:configuration}
@@ -126,17 +169,17 @@ kpsewhich thai-segmentation.sty
 \babelfont{rm}{Sarabun} % ตั้งแบบอักษรปกติของเอกสาร Sarabun
 \end{texsource}
 
-สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{babel} ได้ที่คู่มือชุดคำสั่ง
-\texttt{babel} \parencite{babel-docs}
+สามารถหาข้อมูลเพิ่มเติมเกี่ยวกับชุดคำสั่ง \texttt{babel}
+ได้ที่คู่มือชุดคำสั่งของ \texttt{babel} \parencite{babel-docs}
 
 ถ้ามีชุดคำสั่ง \texttt{microtype}
-แนะนำให้เรียกใช้ด้วยเพื่อการจัดวางตัวอักษรที่สวยงามกว่าเดิม โดยใช้คำสั่ง
+แนะนำให้เรียกใช้ด้วยเพื่อการจัดวางตัวอักษรที่สวยงามกว่าเดิมโดยใช้คำสั่ง
 
 \begin{texsource}{}
 \usepackage[protrusion=true,expansion=true,tracking=true]{microtype}
 \end{texsource}
 
-หลังจากตั้งค่าเอกสารให้เป็นภาษาไทยเสร็จ ถึงเรียกใช้ชุดคำสั่ง
+หลังจากตั้งค่าเอกสารให้เป็นภาษาไทยเสร็จ สามารถเรียกใช้ชุดคำสั่ง
 \texttt{thai-segmentation} ได้โดยใช้คำสั่ง
 
 \begin{texsource}{}
@@ -204,10 +247,16 @@ kpsewhich thai-segmentation.sty
 
 \section{รายชื่อคำสั่ง}
 
-\paragraph{หมายเหตุ :}
+\paragraph{หมายเหตุ 1 :}
 
 ในคำสั่งที่รับค่าเป็นรายการคำ เช่น \texttt{\textbackslash ThaiAddWords}
 ห้ามเว้นวรรคระหว่างลูกน้ำเด็ดขาด
+
+\paragraph{หมายเหตุ 2 :}
+
+คำสั่งเหล่านี้ สามารถเรียกใช้งานได้ทุกที่ในเอกสาร
+โดยจะมีผลกับทุกข้อความที่ตามหลังจุดที่เรียกคำสั่ง
+แต่จะไม่มีผลกับย่อหน้าก่อนหน้านี้
 
 \begin{description}[font=\ttfamily]
   \item[\textbackslash ThaiAddWords\{<คำที่หนึ่ง,คำที่สอง,...>\}] เพิ่มคำเข้าพจนานุกรมของ
