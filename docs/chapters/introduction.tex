@@ -74,7 +74,8 @@ kpsewhich thai-segmentation.sty
         \url{https://github.com/AtomThum/thai-segmentation/archive/refs/heads/main.zip}
         เพื่อดาวน์โหลดไฟล์ \texttt{thai-segmentation-main.zip}
   \item แตกไฟล์ \texttt{thai-segmentation-main.zip}
-  \item อัพโหลดไฟล์และโฟลเดอร์ต่อไปนี้ลงใน Overleaf
+  \item อัพโหลดไฟล์และโฟลเดอร์ต่อไปนี้ลงใน Overleaf (โฟลเดอร์จะลงท้ายด้วย
+        \enquote{/})
         \begin{itemize}
           \item \texttt{data/}
           \item \texttt{newmm/}
@@ -246,6 +247,7 @@ texhash
 \end{texsource}
 
 \section{รายชื่อคำสั่ง}
+\label{sec:available-commands}
 
 \paragraph{หมายเหตุ 1 :}
 
@@ -278,6 +280,15 @@ texhash
   \item[\textbackslash ThaiAddWordsFromFile\{<ไฟล์พจนานุกรม>\}] นำเข้าไฟล์พจนานุกรมเพิ่มเติม
         การทำงานเหมือนการกำหนดผ่านการตั้งค่า \texttt{dictionary}
         (\zcref{sec:configuration})
-  \item[\textbackslash ThaiAddSyllables\{<กลุ่มอักษรที่หนึ่ง,กลุ่มอักษรที่สอง,...>\}] เพิ่มกลุ่มอักษรเพื่อใช้ในการใส่ยัติภังค์
-  \item[\textbackslash ThaiRemoveSyllables\{<กลุ่มอักษรที่หนึ่ง,กลุ่มอักษรที่สอง>\}] ลบกลุ่มอักษรออกจากระบบการใส่ยัติภังค์
+  \item[\textbackslash ThaiAddSyllables\{<พยางค์ที่หนึ่ง,พยางค์ที่สอง,...>\}] เพิ่มพยางค์ที่ใช้ในการหาตำแหน่งแยกคำด้วยยัติภังค์
+  \item[\textbackslash ThaiRemoveSyllables\{<พยางค์ที่หนึ่ง,พยางค์ที่สอง>\}] ลบพยางค์ที่ใช้ในการหาตำแหน่งแยกคำด้วยยัติภังค์
 \end{description}
+
+\section{คำแนะนำเรื่องการใช้ยัติภังค์}
+
+จากสำนักงานราชบัณฑิตยสภา \parencite{hyphenation-orst}
+\begin{quote}
+  \enquote{\emph{ยัติภังค์ (-) ใช้เขียนไว้สุดบรรทัดเพื่อต่อพยางค์หรือคำสมาส
+    ซึ่งจำเป็นต้องเขียนแยกบรรทัดกันเนื่องจากเนื้อที่จำกัด}}
+\end{quote}
+ดังนั้น ควรตั้งให้ยัติภังค์แยกคำแค่หลังพยางค์เท่านั้น

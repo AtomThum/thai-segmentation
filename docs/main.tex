@@ -42,11 +42,11 @@
 
 \pretolerance=1000
 \tolerance=5000
-\hyphenpenalty=500
+\hyphenpenalty=1000
 
 \begin{document}
 
-\title{ชุดคำสั่งตัดคำภาษาไทยใน \lualatexlogo}
+\title{\texttt{thai-segmentation} \\ ชุดคำสั่งตัดคำภาษาไทยใน \lualatexlogo}
 \author{ภูริพัฒน์ ถัมภ์บรรฑุ}
 \date{31 ตุลาคม พ.ศ.\ 2569}
 \maketitle
@@ -54,8 +54,8 @@
 \begin{abstract}
   \setSpacing{1.5}
   ชุดคำสั่งนี้ใช้ตัดคำภาษาไทยใน \lualatexlogo โดยใช้ขั้นตอนวิธี \texttt{newmm} จากโปรแกรม PyThaiNLP \parencite{pythainlp-proceedings}
-  ซึ่งเป็นขั้นตอนวิธีตัดคำภาษาไทยแบบใช้พจนานุกรม
-  ผู้ใช้งานสามารถเพิ่มคำหรือลบคำออกจากพจนานุกรมได้
+  ซึ่งเป็นขั้นตอนวิธีตัดคำภาษาไทยแบบใช้พจนานุกรมคำไทย และ หาตำแหน่งแยกคำด้วยยัติภังค์แบบใช้พจนานุกรมพยางค์
+  ผู้ใช้งานสามารถเพิ่มคำหรือลบคำออกจากพจนานุกรมทั้งสองได้
   ระบุตำแหน่งที่จะแยกคำด้วยยัติภังค์ได้
   และสามารถควบคุมขนาดของช่องว่างระหว่างคำหรือระหว่างกลุ่มตัวอักษรในประโยคได้
 \end{abstract}
@@ -64,11 +64,7 @@
 
 \input{chapters/introduction}
 \input{chapters/word-segmenting}
-
-\chapter{กลุ่มตัวอักษร และ การใช้ยัติภังค์}
-\label{sec:intercluster-stretch}
-
-\chapter{การทำให้เกิดผล}
+\input{chapters/implementation}
 
 \appendix
 

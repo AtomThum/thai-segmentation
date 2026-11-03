@@ -10,7 +10,7 @@
     "SOV_monomon:mode=harf;script=thai;"
   })
 }
-\newfontfamily{\thaifont}{Niramit}[Script=Thai,WordSpace={1.5,2.25,0.75}]
+\newfontfamily{\thaifont}{Niramit}[Script=Thai,WordSpace={1.75,2.25,0.75}]
 \newfontfamily{\thaifontsf}{Athiti}[Script=Thai,Scale=MatchUppercase]
 \newfontfamily{\thaifonttt}{MapleMono-NF}[Scale=MatchUppercase,RawFeature={fallback=monofallback}]
 \newfontfamily{\englishfont}{Niramit}[Ligatures=TeX]
@@ -206,5 +206,9 @@
 % Backmatter: Indices
 \usepackage{imakeidx}
 \makeindex[intoc=true]
+
+\usepackage{csquotes}
 \usepackage[backend=biber,style=apa,sorting=anyvt]{biblatex}
 \addbibresource{bibliography.bib}
+\DeclareQuoteStyle{thai-style}{“}{”}{‘}{’}
+\setquotestyle{thai-style}
