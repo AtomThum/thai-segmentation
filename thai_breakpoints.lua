@@ -18,7 +18,7 @@ local M = {}
 M.TCC_THRESHOLD = 5
 
 --- Syllables longer than this are split further into TCC clusters.
-M.SYLLABLE_SPLIT_THRESHOLD = 4
+M.SYLLABLE_SPLIT_THRESHOLD = 10
 
 --- Breaks closer than this to either end of a word are dropped, as
 --- \lefthyphenmin and \righthyphenmin would. User hyphenations are exempt.
