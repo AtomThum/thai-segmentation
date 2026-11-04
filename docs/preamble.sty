@@ -20,8 +20,32 @@
 \setmainlanguage{thai}
 \setotherlanguage{english}
 
-\usepackage[thai-segmentation=true,interword-expansion=true,interword-stretch=0.7,interword-shrink=0.3,intercluster-stretch=0]{thai-segmentation}
-\usepackage[protrusion=true,expansion=true,tracking=true]{microtype}
+\usepackage[
+  interword-expansion=true,
+  interword-stretch=0.7,
+  interword-shrink=0.25,
+  intercluster-stretch=0.3,
+  show-hyph=false,
+]{thai-segmentation}
+\usepackage[protrusion=true,expansion=true,tracking=true,babel=true]{microtype}
+
+% Fonts Setup: Mathematics
+\usepackage{mathtools}
+\usepackage[math-style=ISO,mathrm=sym,warnings-off={mathtools-colon}]{unicode-math}
+\setmathfont{Concrete-Math.otf}
+\setmathfont[range={"27E6-"27E7}]{Latin Modern Math}
+\usepackage{stmaryrd}
+\noDisplayskipStretch
+\allowdisplaybreaks
+\setoperatorfont\symscr
+\everymath{\displaystyle}
+\AtBeginDocument{
+  % Switching epsilon and varepsilon
+  \NewCommandCopy{\tempepsilon}{\epsilon}
+  \NewCommandCopy{\tempvarepsilon}{\varepsilon}
+  \DeclareDocumentCommand{\epsilon}{}{\tempvarepsilon}
+  \DeclareDocumentCommand{\varepsilon}{}{\tempepsilon}
+}
 
 %%% Colors
 \usepackage{xcolor}
@@ -180,19 +204,15 @@
 }
 \zcLanguageSetup{thai}{
   type = section,
-  name-sg = ตอนที่,
+  name-sg = บทที่,
+}
+\zcLanguageSetup{thai}{
+  type = subsection,
+  name-sg = บทที่,
 }
 \zcLanguageSetup{thai}{
   type = equation,
   name-sg = สมการที่,
-}
-\zcLanguageSetup{thai}{
-  type = section,
-  name-sg = ตอนที่,
-}
-\zcLanguageSetup{thai}{
-  type = subsection,
-  name-sg = ตอนที่,
 }
 \zcLanguageSetup{thai}{
   type = figure,
