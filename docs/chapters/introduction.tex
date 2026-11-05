@@ -4,12 +4,12 @@
 \section{ความต้องการขั้นต่ำของชุดคำสั่ง}
 
 \begin{enumerate}
-  \item \lualatexlogo รุ่น (เวอร์ชัน) หลังเดือนตุลาคม ปี ค.ศ. 2025 (พ.ศ. 2568)
-        \\
+  \item \lualatexlogo รุ่นหลังเดือนตุลาคม ปี ค.ศ. 2025 (พ.ศ. 2568) \\
         \textbf{หมายเหตุ : ชุดคำสั่งนี้ ไม่รองรับ \pdftexlogo หรือ \xelatexlogo}
-  \item ชุดคำสั่งของ \latexlogo ที่ใช้ตั้งเอกสารเป็นภาษาไทย
-        มีให้เลือกสองชุดคำสั่ง ได้แก่ \texttt{babel} กับ \texttt{polyglossia}
-        ถ้าใช้ \texttt{polyglossia} ต้องมีชุดคำสั่ง \texttt{fontspec} ด้วย
+  \item ชุดคำสั่ง (package) ของ \latexlogo ที่ใช้ตั้งเอกสารเป็นภาษาไทย
+        มีให้เลือกสองชุดคำสั่ง ได้แก่ \texttt{babel} กับ \texttt{polyglossia} \\
+        \textbf{หมายเหตุ : ถ้าใช้ \texttt{polyglossia} ต้องมีชุดคำสั่ง
+        \texttt{fontspec} ด้วย}
   \item ชุดแบบอักษรไทย (Thai font)
   \item แนะนำให้ติดตั้ง \texttt{microtype} ด้วย เพื่อให้การจัดวางตัวอักษร
         (typography) สวยงามกว่าเดิม แต่จะไม่ใช้ก็ได้
@@ -21,7 +21,7 @@
 
 \section{วิธีการดาวน์โหลดชุดคำสั่ง}
 
-\paragraph{ในระบบปฎิบัติการ Linux :}
+\paragraph{ในระบบปฏิบัติการ Linux :}
 
 ต้องมีโปรแกรม \texttt{git} สามารถดาวน์โหลดโปรแกรมได้ผ่านคู่มือดาวน์โหลดของ
 \texttt{git} \parencite{git-installation}
@@ -41,7 +41,7 @@ texhash
 kpsewhich thai-segmentation.sty
 \end{bashsource}
 
-\paragraph{ในระบบปฎิบัติการ Windows :}
+\paragraph{ในระบบปฏิบัติการ Windows :}
 
 \begin{enumerate}
   \item ถ้าไม่ได้ตั้งค่า \texttt{TEXMFHOME} ไว้ ให้สร้างโฟลเดอร์ \\
@@ -90,9 +90,8 @@ kpsewhich thai-segmentation.sty
 
 \paragraph{ใน MacOS :}
 
-เนื่องจากสถานะทางการเงินของผู้พัฒนา จึงไม่มี MacBook
-และไม่สามารถทดสอบการดาวน์โหลดชุดคำสั่งบน MacOS ได้ ถึงอย่างไรก็ตาม
-คำสั่งดาวน์โหลด\emph{ควรจะ}เหมือนกับคำสั่งใน Linux
+เนื่องจากผู้พัฒนาไม่มีเครื่องที่ใช้ MacOS จึงไม่สามารถทดสอบการดาวน์โหลดใน MacOS
+ได้ อย่างไรก็ตาม คำสั่งดาวน์โหลด\emph{ควรจะ}เหมือนกับคำสั่งใน Linux
 ทางผู้พัฒนายินดีรับข้อเสนอแนะจากผู้ใช้งาน MacOS เสมอ
 สามารถติดต่อผู้พัฒนาได้ผ่านทาง
 \url{https://github.com/AtomThum/thai-segmentation/issues/new}
@@ -109,8 +108,7 @@ xcode-select --install
 git --version
 \end{bashsource}
 
-เมื่อดาวน์โหลดโปรแกรม \texttt{git} เรียบร้อยแล้ว
-สามารถดาวน์โหลดชุดคำสั่งนี้ได้ผ่าน
+เมื่อดาวน์โหลดโปรแกรม \texttt{git} แล้ว สามารถดาวน์โหลดชุดคำสั่งนี้ได้ผ่าน
 
 \begin{bashsource}{}
 mkdir -p $(kpsewhich -var-value TEXMFHOME)/tex/latex
@@ -120,11 +118,40 @@ rm -rf .git
 texhash
 \end{bashsource}
 
+\section{ตัวอย่างการใช้งานสั้น ๆ กับชุดคำสั่ง \texttt{polyglossia}}
+
+\begin{texsource}{}
+% !TEX program = lualatex
+\documentclass{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+% กำหนดแบบอักษรภาษาไทยและอังกฤษ เปลี่ยนเป็นชื่อแบบอักษรในเครื่องหรือ Overleaf ได้
+\newfontfamily{\thaifont}{Sarabun}[Script=Thai]
+\newfontfamily{\englishfont}{Sarabun}[Ligatures=TeX]
+
+\usepackage[
+  interword-expansion=true,
+  interword-stretch=0.5,
+  interword-shrink=0.2
+]{thai-segmentation}
+\hyphenpenalty=500
+
+\begin{document}
+นี่คือข้อความทดสอบการตัดคำและจัดบรรทัดภาษาไทยใน LuaLaTeX โดยใช้ newmm
+เนื่องจากภาษาไทยไม่เขียนเว้นวรรคระหว่างคำในประโยค
+จึงต้องหาขอบเขตของคำเพื่อใส่ยัติภังค์และยืดช่องว่างระหว่างคำ
+เพื่อที่จะจัดข้อความให้เต็มบรรทัดได้อย่างสวยงาม
+\end{document}
+\end{texsource}
+
 \section{การเรียกใช้งานชุดคำสั่งและการตั้งค่าเอกสาร}
 \label{sec:configuration}
 
-ก่อนจะเรียกใช้ชุดคำสั่ง ต้องตั้งให้เอกสารให้เป็นภาษาไทย \lualatexlogo
-และใช้แบบอักษรไทย มีอยู่สองวิธีดังนี้
+ก่อนจะเรียกใช้ชุดคำสั่ง ให้ตรวจสอบว่ากำลังใช้งาน \lualatexlogo อยู่ ไม่ใช่
+\pdftexlogo หรือ \xelatexlogo หลังจากนั้น
+ตั้งเอกสารให้เป็นภาษาไทยและใช้แบบอักษรไทย มีอยู่สองวิธี\hbox{ดังนี้}
 
 \paragraph{ผ่านชุดคำสั่ง \texttt{polyglossia} :}
 
@@ -139,7 +166,7 @@ texhash
 \usepackage{polyglossia}
 
 \setdefaultlanguage{thai} % ตั้งเอกสารให้เป็นภาษาไทย
-\setotherlanguage{english} % ตั้งว่า สามารถมีภาษาอังกฤษแทรกได้
+\setotherlanguage{english} % บอก polyglossia ว่า สามารถมีภาษาอังกฤษแทรกในเอกสารได้
 
 \newfontfamily{\thaifont}{Sarabun}[Script=Thai] % ตั้งแบบอักษรภาษาไทยให้เป็น Sarabun
 \newfontfamily{\englishfont}{Sarabun}[Ligatures=TeX] % ตั้งแบบอักษรอังกฤษให้เป็น Sarabun เช่นกัน
@@ -226,8 +253,9 @@ texhash
           \caption{ตัวอย่างโครงสร้างโฟลเดอร์}
           \label{fig:folder-example}
         \end{figure}
-  \item[tcc-min-edge] (จำนวนเต็ม) หากคำใดมีตัวอักษรน้อยกว่าค่านี้
-        จะไม่ใส่จุดตัดคำด้วยยัติภังค์ มีค่าโดยปริยายเป็น \texttt{2}
+  \item[tcc-min-edge] (จำนวนเต็ม)
+        ยอมให้ใส่ยัติภังค์ก็ต่อเมื่อตำแหน่งแยกคำด้วยยัติภังค์อยู่ห่างจากขอบคำทั้งสองฝั่งอยู่
+        \texttt{tcc-min-edge} เท่านั้น มีค่าโดยปริยายเป็น \texttt{2}
         (เพิ่มเติมใน\zcref{sec:interword-expansion})
   \item[show-hyph] (\texttt{true}/\texttt{false})
         เป็นเครื่องมือสำหรับผู้พัฒนาเพื่อตรวจสอบจุดตัดคำและตำแหน่งการใส่ยัติภังค์
@@ -264,7 +292,7 @@ texhash
   \item[\textbackslash ThaiAddWords\{<คำที่หนึ่ง,คำที่สอง,...>\}] เพิ่มคำเข้าพจนานุกรมของ
         \texttt{newmm} รับค่าเหมือน \texttt{dictionaries} ในการตั้งค่าชุดคำสั่ง
         ตัวอย่างวิธีการใช้เช่น \\
-        \texttt{\textbackslash ThaiAddwords\{ลากรานจ์,แฮมิลตัน,แฮมิลโทเนียน\}}
+        \texttt{\textbackslash ThaiAddWords\{ลากรานจ์,แฮมิลตัน,แฮมิลโทเนียน\}}
   \item[\textbackslash ThaiRemoveWords\{<คำที่หนึ่ง,คำที่สอง,...>\}] ลบคำจากพจนานุกรมของ
         \texttt{newmm} รับค่าเหมือน \texttt{dictionaries} ในการตั้งค่าชุดคำสั่ง
         ตัวอย่างการใช้เช่น \\

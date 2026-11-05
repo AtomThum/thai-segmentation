@@ -33,27 +33,31 @@
 \usepackage{metalogo}
 \NewDocumentCommand{\texlogo}{}{{\ncmfont\mdseries\TeX\ }}
 \NewDocumentCommand{\lualatexlogo}{}{{\ncmfont\upshape\mdseries\LuaLaTeX\ }}
+\NewDocumentCommand{\luatexlogo}{}{{\ncmfont\upshape\mdseries\LuaTeX\ }}
 \NewDocumentCommand{\latexlogo}{}{{\ncmfont\mdseries\LaTeX\ }}
 \NewDocumentCommand{\xelatexlogo}{}{{\ncmfont\upshape\mdseries\XeLaTeX\ }}
 \NewDocumentCommand{\pdftexlogo}{}{{\ncmfont\mdseries{pdf}\TeX\ }}
 
-\ThaiAddWords{กลุ่มตัวอักษร,กลุ่มตัวอักษรไทย,ไม่พึงประสงค์,แต้มเสีย,โหนดระยะช่องไฟ,โหนดอักขระ,โหนดจุดเลือกตัดคำ}
+\ThaiAddWords{กลุ่มตัวอักษร,กลุ่มตัวอักษรไทย,ไม่พึงประสงค์,แต้มเสีย,โหนดระยะช่องไฟ,โหนดอักขระ,โหนดจุดเลือกตัดคำ,ค่าโดยปริยาย}
 \ThaiAddHyphenations{ตำ-แหน่ง,เหมือน,อีก-รอบ,ขั้น-ตอน-วิธี}
 
 \pretolerance=1000
 \tolerance=5000
-\hyphenpenalty=1000
+\hyphenpenalty=500
+\doublehyphendemerits=2000
+
+\setlength{\parfillskip}{0pt plus 0.75\textwidth}
 
 \begin{document}
 
 \title{\texttt{thai-segmentation} \\ ชุดคำสั่งตัดคำภาษาไทยใน \lualatexlogo}
-\author{ภูริพัฒน์ ถัมภ์บรรฑุ}
-\date{31 ตุลาคม พ.ศ.\ 2569}
+\author{นายภูริพัฒน์ ถัมภ์บรรฑุ}
+\date{พิมพ์ฉบับแรกวันที่ : 31 ตุลาคม พ.ศ.\ 2569 \\ ฉบับปัจจุบัน : \today}
 \maketitle
 
 \begin{abstract}
   \setSpacing{1.5}
-  ชุดคำสั่งนี้ใช้ตัดคำภาษาไทยใน \lualatexlogo โดยใช้ขั้นตอนวิธี \texttt{newmm} จากโปรแกรม PyThaiNLP \parencite{pythainlp-proceedings}
+  ชุดคำสั่งนี้ (package) ใช้ตัดคำภาษาไทยใน \lualatexlogo โดยใช้ขั้นตอนวิธี \texttt{newmm} จากโปรแกรม PyThaiNLP \parencite{pythainlp-proceedings}
   ซึ่งเป็นขั้นตอนวิธีตัดคำภาษาไทยแบบใช้พจนานุกรมคำไทย และ หาตำแหน่งแยกคำด้วยยัติภังค์แบบใช้พจนานุกรมพยางค์
   ผู้ใช้งานสามารถเพิ่มคำหรือลบคำออกจากพจนานุกรมทั้งสองได้
   ระบุตำแหน่งที่จะแยกคำด้วยยัติภังค์ได้
